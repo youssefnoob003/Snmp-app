@@ -1,0 +1,114 @@
+<form method="POST" action="{{ url_for('device_routes.add_device') }}">
+    <!-- IP Address -->
+    <div class="mb-4">
+      <label for="ip_address" class="form-label">IP Address or Subnet</label>
+      <input type="text" class="form-control" id="ip_address" name="ip_address" required 
+             placeholder="e.g., 192.168.1.1 or 192.168.1.0/24">
+      <div class="form-text text-muted">Enter a single IP address or a subnet in CIDR notation</div>
+    </div>
+  
+    <!-- SNMP Version -->
+    <div class="mb-4">
+      <label for="snmp_version" class="form-label">SNMP Version</label>
+      <select class="form-select" id="snmp_version" name="snmp_version" required>
+        <option value="1">SNMPv1</option>
+        <option value="2">SNMPv2c</option>
+        <option value="3">SNMPv3</option>
+      </select>
+    </div>
+  
+    <!-- Community String -->
+    <div class="mb-4" id="community_string_div">
+      <label for="community_string" class="form-label">Community String</label>
+      <input type="text" class="form-control" id="community_string" name="community_string">
+      <div class="form-text text-muted">For SNMPv1 and SNMPv2c</div>
+    </div>
+  
+    <!-- SNMPv3 Username -->
+    <div class="mb-4" id="username_div" style="display:none;">
+      <label for="username" class="form-label">SNMPv3 Username</label>
+      <input type="text" class="form-control" id="username" name="username">
+    </div>
+  
+    <!-- Auth Level -->
+    <div class="mb-4" id="auth_level_div" style="display:none;">
+      <label for="auth_level" class="form-label">Authentication Level</label>
+      <select class="form-select" id="auth_level" name="auth_level">
+        <option value="noAuthNoPriv">NoAuthNoPriv</option>
+        <option value="authNoPriv">AuthNoPriv</option>
+        <option value="authPriv">AuthPriv</option>
+      </select>
+    </div>
+  
+    <!-- Auth Protocol -->
+    <div class="mb-4" id="auth_protocol_div" style="display:none;">
+      <label for="auth_protocol" class="form-label">Auth Protocol</label>
+      <select class="form-select" id="auth_protocol" name="auth_protocol">
+        <option value="MD5">MD5</option>
+        <option value="SHA">SHA</option>
+      </select>
+    </div>
+  
+    <!-- Auth Password -->
+    <div class="mb-4" id="auth_password_div" style="display:none;">
+      <label for="auth_password" class="form-label">Auth Password</label>
+      <input type="password" class="form-control" id="auth_password" name="auth_password">
+    </div>
+  
+    <!-- Privacy Protocol -->
+    <div class="mb-4" id="priv_protocol_div" style="display:none;">
+      <label for="priv_protocol" class="form-label">Privacy Protocol</label>
+      <select class="form-select" id="priv_protocol" name="priv_protocol">
+        <option value="DES">DES</option>
+        <option value="AES">AES</option>
+      </select>
+    </div>
+  
+    <!-- Privacy Password -->
+    <div class="mb-4" id="priv_password_div" style="display:none;">
+      <label for="priv_password" class="form-label">Privacy Password</label>
+      <input type="password" class="form-control" id="priv_password" name="priv_password">
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Add Device</button>
+  </form>
+  
+  <script>
+    function updateAddFormFields() {
+      const version = document.getElementById("snmp_version").value;
+      const authLevel = document.getElementById("auth_level").value;
+  
+      const communityString = document.getElementById("community_string");
+      const username = document.getElementById("username");
+      const authProtocol = document.getElementById("auth_protocol");
+      const authPassword = document.getElementById("auth_password");
+      const privProtocol = document.getElementById("priv_protocol");
+      const privPassword = document.getElementById("priv_password");
+  
+      // Show/hide fields
+      const showV3 = version === "3";
+      const needsAuth = authLevel === "authNoPriv" || authLevel === "authPriv";
+      const needsPriv = authLevel === "authPriv";
+  
+      document.getElementById("community_string_div").style.display = showV3 ? "none" : "block";
+      document.getElementById("username_div").style.display = showV3 ? "block" : "none";
+      document.getElementById("auth_level_div").style.display = showV3 ? "block" : "none";
+      document.getElementById("auth_protocol_div").style.display = showV3 && needsAuth ? "block" : "none";
+      document.getElementById("auth_password_div").style.display = showV3 && needsAuth ? "block" : "none";
+      document.getElementById("priv_protocol_div").style.display = showV3 && needsPriv ? "block" : "none";
+      document.getElementById("priv_password_div").style.display = showV3 && needsPriv ? "block" : "none";
+  
+      // Set required attributes dynamically
+      communityString.required = !showV3;
+      username.required = showV3;
+      authProtocol.required = showV3 && needsAuth;
+      authPassword.required = showV3 && needsAuth;
+      privProtocol.required = showV3 && needsPriv;
+      privPassword.required = showV3 && needsPriv;
+    }
+  
+    document.addEventListener("DOMContentLoaded", updateAddFormFields);
+    document.getElementById("snmp_version").addEventListener("change", updateAddFormFields);
+    document.getElementById("auth_level").addEventListener("change", updateAddFormFields);
+  </script>
+  

@@ -1,0 +1,120 @@
+<form method="POST" action="{{ url_for('device_routes.update_cred', device_id=device.id) }}">
+    <div class="modal-header">
+      <h5 class="modal-title">Update SNMP Credentials</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+  
+      <!-- SNMP Version -->
+      <div class="mb-3">
+        <label for="snmp_version{{ device.id }}" class="form-label">SNMP Version</label>
+        <select class="form-select" id="snmp_version{{ device.id }}" name="snmp_version" required>
+          <option value="1" {% if device.snmp_version == '1' %}selected{% endif %}>SNMPv1</option>
+          <option value="2" {% if device.snmp_version == '2c' %}selected{% endif %}>SNMPv2c</option>
+          <option value="3" {% if device.snmp_version == '3' %}selected{% endif %}>SNMPv3</option>
+        </select>
+      </div>
+  
+      <!-- Community String -->
+      <div class="mb-3" id="community_string_div{{ device.id }}">
+        <label for="community_string{{ device.id }}" class="form-label">Community String</label>
+        <input type="text" class="form-control" id="community_string{{ device.id }}" name="community_string"
+               value="{{ device.community_string }}">
+      </div>
+  
+      <!-- SNMPv3 Username -->
+      <div class="mb-3" id="username_div{{ device.id }}" style="display:none;">
+        <label for="username{{ device.id }}" class="form-label">SNMPv3 Username</label>
+        <input type="text" class="form-control" id="username{{ device.id }}" name="username"
+               value="{{ device.username }}">
+      </div>
+  
+      <!-- Auth Level -->
+      <div class="mb-3" id="auth_level_div{{ device.id }}" style="display:none;">
+        <label for="auth_level{{ device.id }}" class="form-label">Authentication Level</label>
+        <select class="form-select" id="auth_level{{ device.id }}" name="auth_level">
+          <option value="noAuthNoPriv" {% if device.auth_level == 'noAuthNoPriv' %}selected{% endif %}>NoAuthNoPriv</option>
+          <option value="authNoPriv" {% if device.auth_level == 'authNoPriv' %}selected{% endif %}>AuthNoPriv</option>
+          <option value="authPriv" {% if device.auth_level == 'authPriv' %}selected{% endif %}>AuthPriv</option>
+        </select>
+      </div>
+  
+      <!-- Auth Protocol -->
+      <div class="mb-3" id="auth_protocol_div{{ device.id }}" style="display:none;">
+        <label for="auth_protocol{{ device.id }}" class="form-label">Auth Protocol</label>
+        <select class="form-select" id="auth_protocol{{ device.id }}" name="auth_protocol">
+          <option value="MD5" {% if device.auth_protocol == 'MD5' %}selected{% endif %}>MD5</option>
+          <option value="SHA" {% if device.auth_protocol == 'SHA' %}selected{% endif %}>SHA</option>
+        </select>
+      </div>
+  
+      <!-- Auth Password -->
+      <div class="mb-3" id="auth_password_div{{ device.id }}" style="display:none;">
+        <label for="auth_password{{ device.id }}" class="form-label">Auth Password</label>
+        <input type="password" class="form-control" id="auth_password{{ device.id }}" name="auth_password"
+               value="{{ device.auth_password }}">
+      </div>
+  
+      <!-- Privacy Protocol -->
+      <div class="mb-3" id="priv_protocol_div{{ device.id }}" style="display:none;">
+        <label for="priv_protocol{{ device.id }}" class="form-label">Privacy Protocol</label>
+        <select class="form-select" id="priv_protocol{{ device.id }}" name="priv_protocol">
+          <option value="DES" {% if device.priv_protocol == 'DES' %}selected{% endif %}>DES</option>
+          <option value="AES" {% if device.priv_protocol == 'AES' %}selected{% endif %}>AES</option>
+        </select>
+      </div>
+  
+      <!-- Privacy Password -->
+      <div class="mb-3" id="priv_password_div{{ device.id }}" style="display:none;">
+        <label for="priv_password{{ device.id }}" class="form-label">Privacy Password</label>
+        <input type="password" class="form-control" id="priv_password{{ device.id }}" name="priv_password"
+               value="{{ device.priv_password }}">
+      </div>
+    </div>
+  
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </form>
+  
+  <script>
+    function toggleFields{{ device.id }}() {
+      const version = document.getElementById("snmp_version{{ device.id }}").value;
+      const authLevel = document.getElementById("auth_level{{ device.id }}").value;
+  
+      const communityString = document.getElementById("community_string{{ device.id }}");
+      const username = document.getElementById("username{{ device.id }}");
+      const authProtocol = document.getElementById("auth_protocol{{ device.id }}");
+      const authPassword = document.getElementById("auth_password{{ device.id }}");
+      const privProtocol = document.getElementById("priv_protocol{{ device.id }}");
+      const privPassword = document.getElementById("priv_password{{ device.id }}");
+  
+      // Show/hide SNMPv3 sections
+      const showV3 = version === "3";
+      const needsAuth = authLevel === "authNoPriv" || authLevel === "authPriv";
+      const needsPriv = authLevel === "authPriv";
+  
+      // Toggle field visibility
+      document.getElementById("community_string_div{{ device.id }}").style.display = showV3 ? "none" : "block";
+      document.getElementById("username_div{{ device.id }}").style.display = showV3 ? "block" : "none";
+      document.getElementById("auth_level_div{{ device.id }}").style.display = showV3 ? "block" : "none";
+      document.getElementById("auth_protocol_div{{ device.id }}").style.display = showV3 && needsAuth ? "block" : "none";
+      document.getElementById("auth_password_div{{ device.id }}").style.display = showV3 && needsAuth ? "block" : "none";
+      document.getElementById("priv_protocol_div{{ device.id }}").style.display = showV3 && needsPriv ? "block" : "none";
+      document.getElementById("priv_password_div{{ device.id }}").style.display = showV3 && needsPriv ? "block" : "none";
+  
+      // Manage required attributes
+      communityString.required = !showV3;
+      username.required = showV3;
+      authProtocol.required = showV3 && needsAuth;
+      authPassword.required = showV3 && needsAuth;
+      privProtocol.required = showV3 && needsPriv;
+      privPassword.required = showV3 && needsPriv;
+    }
+  
+    document.addEventListener("DOMContentLoaded", toggleFields{{ device.id }});
+    document.getElementById("snmp_version{{ device.id }}").addEventListener("change", toggleFields{{ device.id }});
+    document.getElementById("auth_level{{ device.id }}").addEventListener("change", toggleFields{{ device.id }});
+  </script>
+  

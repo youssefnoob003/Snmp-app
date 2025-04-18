@@ -1,0 +1,22 @@
+/* Responsive styles for large screens (≤992px) */
+@media (max-width: 992px) {
+    .container {
+        padding: var(--spacing-lg);
+    }
+    
+    .navbar-nav {
+        gap: var(--spacing-md);
+    }
+    
+    .d-lg-none {
+        display: none !important;
+    }
+    
+    .d-lg-block {
+        display: block !important;
+    }
+    
+    .d-lg-flex {
+        display: flex !important;
+    }
+} 

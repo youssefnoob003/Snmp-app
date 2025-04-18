@@ -1,0 +1,36 @@
+/* Section layouts */
+.section {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.section-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Section layouts for different content types */
+.section-divided {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+.section-full {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .section-divided {
+        grid-template-columns: 1fr;
+    }
+} 

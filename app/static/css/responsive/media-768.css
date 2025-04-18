@@ -1,0 +1,88 @@
+/* Responsive styles for medium screens (≤768px) */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-md);
+    }
+    
+    .row {
+        flex-direction: column;
+    }
+    
+    .col {
+        padding: var(--spacing-sm) 0;
+    }
+
+    .btn-responsive {
+        width: 100%;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .chart-container {
+        padding: var(--spacing-lg);
+    }
+    
+    .card-header, .card-body, .card-footer {
+        padding: var(--spacing-md);
+    }
+    
+    .card-body {
+        padding: var(--spacing-lg);
+    }
+    
+    .table-responsive {
+        border-radius: var(--radius-md);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .table thead th {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.7rem;
+    }
+    
+    .table td {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .table td form.d-inline {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        max-width: none;
+    }
+    
+    .table td form.d-inline .form-control {
+        width: 100%;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .table td form.d-inline .btn-sm {
+        margin-left: 0;
+    }
+    
+    .table td:first-child {
+        width: 40%;
+    }
+    
+    .list-group-item .d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    .list-group-item .btn-group {
+        margin-top: var(--spacing-sm);
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .d-md-none {
+        display: none !important;
+    }
+    
+    .d-md-block {
+        display: block !important;
+    }
+    
+    .d-md-flex {
+        display: flex !important;
+    }
+} 

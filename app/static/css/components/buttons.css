@@ -1,0 +1,132 @@
+/* Buttons */
+.btn {
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    border: none;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.btn-secondary {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-danger {
+    background: var(--gradient-danger);
+    color: white;
+}
+
+.btn-success {
+    background: var(--gradient-success);
+    color: white;
+}
+
+/* Button outline styles */
+.btn-outline-primary {
+    background: transparent;
+    color: var(--accent-primary);
+    border: 1.5px solid var(--accent-primary);
+}
+
+.btn-outline-danger {
+    background: transparent;
+    color: var(--danger);
+    border: 1.5px solid var(--danger);
+}
+
+/* Button hover effects */
+.btn-primary:hover {
+    background: var(--gradient-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-primary);
+    transform: translateY(-2px);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.btn-outline-primary:hover {
+    background: var(--accent-light);
+    color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+.btn-outline-danger:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+    transform: translateY(-1px);
+}
+
+/* Button sizes */
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: 0.8rem 1.6rem;
+    font-size: 1.1rem;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Device list button group styles */
+.list-group-item .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.list-group-item .btn-group .btn {
+    border-radius: var(--radius-md) !important;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .btn-responsive {
+        width: 100%;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .list-group-item .btn-group {
+        margin-top: var(--spacing-sm);
+        width: 100%;
+        justify-content: space-between;
+    }
+} 
+
+.table td form.d-inline .btn-sm {
+    transition: all 0.3s ease;
+}
+
+.table td form.d-inline .btn-sm:hover {
+    transform: translateX(4px); /* Nudges to the right */
+}

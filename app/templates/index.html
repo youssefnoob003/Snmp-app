@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Add New Device</h2>
+            </div>
+            <div class="card-body">
+                {% include 'add_device_form.html' %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Devices</h2>
+            </div>
+            <div class="card-body">
+                {% if devices %}
+                    <div class="list-group">
+                        {% for device in devices %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-1">{{ device.ip_address }}</h5>
+                                        {% if device.model %}
+                                        <div><small class="text-muted">Model: {{ device.model }}</small></div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-outline-primary btn-sm" 
+                                                data-bs-toggle="modal" data-bs-target="#updateModal{{ device.id }}">
+                                            Update SNMP Credentials
+                                        </button>
+                                        <a href="{{ url_for('device_routes.query_device', device_id=device.id) }}" 
+                                           class="btn btn-primary btn-sm">Query</a>
+                                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal{{ device.id }}">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <p class="text-muted">No devices added yet.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals moved outside of the card structure -->
+{% if devices %}
+    {% for device in devices %}
+        <!-- Update Community Modal -->
+        <div class="modal fade" id="updateModal{{ device.id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ device.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    {% include 'update_snmp_cred_form.html' %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteModal{{ device.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ device.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel{{ device.id }}">Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete the device <strong>{{ device.ip_address }}</strong>?</p>
+                        <p class="text-muted">This action cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                        <form method="POST" action="{{ url_for('device_routes.delete_device', device_id=device.id) }}" class="d-inline">
+                            <button type="submit" class="btn btn-danger">Delete Device</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}
+

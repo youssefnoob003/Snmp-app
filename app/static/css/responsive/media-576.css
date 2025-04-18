@@ -1,0 +1,67 @@
+/* Responsive styles for small screens (≤576px) */
+@media (max-width: 576px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+    
+    .container {
+        padding: var(--spacing-sm);
+    }
+    
+    .card-body {
+        padding: var(--spacing-md);
+    }
+    
+    .table td:first-child {
+        width: 100%;
+    }
+    
+    .table td {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: var(--spacing-xs) var(--spacing-md);
+    }
+    
+    .table td:first-child {
+        padding-top: var(--spacing-md);
+        border-bottom: none;
+        background-color: var(--bg-hover);
+        font-weight: 600;
+    }
+    
+    .table td:nth-child(2) {
+        padding-bottom: var(--spacing-md);
+        padding-top: var(--spacing-xs);
+    }
+    
+    .table thead {
+        display: none;
+    }
+    
+    .table tbody tr {
+        display: block;
+        margin-bottom: var(--spacing-md);
+        border-bottom: 2px solid var(--border-color);
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+    }
+    
+    .d-sm-none {
+        display: none !important;
+    }
+    
+    .d-sm-block {
+        display: block !important;
+    }
+    
+    .d-sm-flex {
+        display: flex !important;
+    }
+} 
