@@ -70,7 +70,7 @@
                         } %}
                         <tbody>
                             {% for key, value in results.items() %}
-                                {% if key not in ['ifInOctets', 'ifOutOctets', 'timestamp', 'sysUpTime', 'sysUpTimeFormatted'] %}
+                                {% if key not in ['ifInOctets', 'ifOutOctets', 'timestamp', 'sysUpTime'] %}
                                 <tr>
                                     <td><strong>{{ key }}</strong></td>
                                     <td>
